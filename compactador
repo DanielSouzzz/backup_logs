@@ -1,0 +1,14 @@
+#! /bin/bash
+
+if [ "$#" -lt 2 ]; then
+    echo "O programa $0 requer o nome do arquivo e arquivos que serão compactados"
+    exit 1
+fi
+
+arquivo_saida="${1%.gz}_$(date +%Y%m%d%H%M%S).gz"  # Adiciona data e remove a extensão .gz se já existir
+arquivos=("${@:2}") # Array que armazena todos os parâmetros a partir do segundo
+
+# Compacta os arquivos usando gzip
+gzip -c "${arquivos[@]}" > "$arquivo_saida"
+echo "Compactado com sucesso em $arquivo_saida"
+
