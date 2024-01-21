@@ -1,0 +1,11 @@
+#! /bin/bash
+
+echo "Digite o caminho para o diretório"
+read caminho_dir
+
+# Verifica a existencia do diretório
+if [ -d "$caminho_dir" ]; then
+    echo "O caminho é válido!"
+else
+    echo "O caminho não é válido. Verifique e tente novamente!"
+fi
