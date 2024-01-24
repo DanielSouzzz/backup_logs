@@ -5,10 +5,16 @@ if [ "$#" -lt 2 ]; then
     exit 1
 fi
 
-arquivo_saida="${1%.gz}_$(date +%Y%m%d%H%M%S).gz"  # Adiciona data e remove a extensão .gz se já existir
+nome_arquivo="${1%.gz}_$(date +%Y%m%d%H).gz"  # Adiciona data e remove a extensão .gz se já existir
 arquivos=("${@:2}") # Array que armazena todos os parâmetros a partir do segundo
 
-# Compacta os arquivos usando gzip
-gzip -c "${arquivos[@]}" > "$arquivo_saida"
-echo "Compactado com sucesso em $arquivo_saida"
-
+# Verifica se o arquivo já está salvo, se tiver ele não salva novamente
+if [ ! -e "$nome_arquivo" ]; then
+    echo "Arquivo não encontrado: $nome_arquivo"
+    echo "Compactando arquivos..."
+    # Compacta os arquivos usando gzip
+    gzip -c "${arquivos[@]}" > "$nome_arquivo"
+    echo "Arquivos compactados em $nome_arquivo"
+else
+    echo "Arquivo já existente"
+  fi
